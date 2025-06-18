@@ -212,7 +212,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: -40,
     alignSelf: 'center',
-    position: 'relative',
   },
   iconBackground: {
     width: 96,
