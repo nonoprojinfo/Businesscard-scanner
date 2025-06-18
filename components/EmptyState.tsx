@@ -10,8 +10,8 @@ interface EmptyStateProps {
 }
 
 export const EmptyState: React.FC<EmptyStateProps> = ({ 
-  title = "No contacts yet",
-  description = "Scan business cards to add contacts to your collection"
+  title = "Aucun contact pour le moment",
+  description = "Scannez des cartes de visite pour ajouter des contacts à votre collection"
 }) => {
   const router = useRouter();
   
@@ -28,7 +28,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       <Text style={styles.description}>{description}</Text>
       <Pressable style={styles.button} onPress={handleScan}>
         <Plus size={20} color="white" />
-        <Text style={styles.buttonText}>Scan Business Card</Text>
+        <Text style={styles.buttonText}>Scanner une carte de visite</Text>
       </Pressable>
     </View>
   );

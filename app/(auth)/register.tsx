@@ -29,17 +29,17 @@ export default function RegisterScreen() {
   
   const handleRegister = async () => {
     if (!name || !email || !password || !confirmPassword) {
-      Alert.alert('Error', 'Please fill in all fields');
+      Alert.alert('Erreur', 'Veuillez remplir tous les champs');
       return;
     }
     
     if (password !== confirmPassword) {
-      Alert.alert('Error', 'Passwords do not match');
+      Alert.alert('Erreur', 'Les mots de passe ne correspondent pas');
       return;
     }
     
     if (!agreeToTerms) {
-      Alert.alert('Error', 'Please agree to the Terms of Service and Privacy Policy');
+      Alert.alert('Erreur', "Veuillez accepter les Conditions d'utilisation et la Politique de confidentialité");
       return;
     }
     
@@ -75,13 +75,13 @@ export default function RegisterScreen() {
           >
             <ArrowLeft size={24} color={colors.text} />
           </Pressable>
-          <Text style={styles.headerTitle}>Create Account</Text>
+          <Text style={styles.headerTitle}>Créer un compte</Text>
           <View style={{ width: 24 }} />
         </View>
         
         <View style={styles.formContainer}>
-          <Text style={styles.title}>Join CardScan</Text>
-          <Text style={styles.subtitle}>Create your account to get started</Text>
+          <Text style={styles.title}>Rejoignez CardScan</Text>
+          <Text style={styles.subtitle}>Créez votre compte pour commencer</Text>
           
           {error && (
             <View style={styles.errorContainer}>
@@ -93,7 +93,7 @@ export default function RegisterScreen() {
             <User size={20} color={colors.primary} />
             <TextInput
               style={styles.input}
-              placeholder="Full Name"
+              placeholder="Nom complet"
               value={name}
               onChangeText={setName}
               placeholderTextColor={colors.placeholder}
@@ -117,7 +117,7 @@ export default function RegisterScreen() {
             <Lock size={20} color={colors.primary} />
             <TextInput
               style={styles.input}
-              placeholder="Password"
+              placeholder="Mot de passe"
               value={password}
               onChangeText={setPassword}
               secureTextEntry={!showPassword}
@@ -139,7 +139,7 @@ export default function RegisterScreen() {
             <Lock size={20} color={colors.primary} />
             <TextInput
               style={styles.input}
-              placeholder="Confirm Password"
+              placeholder="Confirmer le mot de passe"
               value={confirmPassword}
               onChangeText={setConfirmPassword}
               secureTextEntry={!showConfirmPassword}
@@ -168,10 +168,10 @@ export default function RegisterScreen() {
               ]} />
             </Pressable>
             <Text style={styles.termsText}>
-              I agree to the{' '}
-              <Text style={styles.termsLink}>Terms of Service</Text>
-              {' '}and{' '}
-              <Text style={styles.termsLink}>Privacy Policy</Text>
+              J'accepte les{' '}
+              <Text style={styles.termsLink}>Conditions d'utilisation</Text>
+              {' '}et la{' '}
+              <Text style={styles.termsLink}>Politique de confidentialité</Text>
             </Text>
           </View>
           
@@ -186,13 +186,13 @@ export default function RegisterScreen() {
             {isLoading ? (
               <ActivityIndicator color="white" size="small" />
             ) : (
-              <Text style={styles.registerButtonText}>Create Account</Text>
+              <Text style={styles.registerButtonText}>Créer un compte</Text>
             )}
           </Pressable>
           
           <View style={styles.divider}>
             <View style={styles.dividerLine} />
-            <Text style={styles.dividerText}>OR</Text>
+            <Text style={styles.dividerText}>OU</Text>
             <View style={styles.dividerLine} />
           </View>
           
@@ -207,10 +207,10 @@ export default function RegisterScreen() {
         </View>
         
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Already have an account? </Text>
+          <Text style={styles.footerText}>Vous avez déjà un compte ? </Text>
           <Link href="/(auth)/login" asChild>
             <Pressable>
-              <Text style={styles.footerLink}>Sign In</Text>
+              <Text style={styles.footerLink}>Se connecter</Text>
             </Pressable>
           </Link>
         </View>

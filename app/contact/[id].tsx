@@ -39,12 +39,12 @@ export default function ContactDetailScreen() {
   if (!contact) {
     return (
       <View style={styles.notFoundContainer}>
-        <Text style={styles.notFoundText}>Contact not found</Text>
+        <Text style={styles.notFoundText}>Contact introuvable</Text>
         <Pressable 
           style={styles.backButton} 
           onPress={() => router.back()}
         >
-          <Text style={styles.backButtonText}>Go Back</Text>
+          <Text style={styles.backButtonText}>Retour</Text>
         </Pressable>
       </View>
     );
@@ -59,12 +59,12 @@ export default function ContactDetailScreen() {
   
   const handleDelete = () => {
     Alert.alert(
-      "Delete Contact",
-      "Are you sure you want to delete this contact? This action cannot be undone.",
+      "Supprimer le contact",
+      "Êtes-vous sûr de vouloir supprimer ce contact ? Cette action ne peut pas être annulée.",
       [
-        { text: "Cancel", style: "cancel" },
+        { text: "Annuler", style: "cancel" },
         { 
-          text: "Delete", 
+          text: "Supprimer", 
           style: "destructive",
           onPress: () => {
             deleteContact(contact.id);
@@ -77,7 +77,7 @@ export default function ContactDetailScreen() {
   
   const handleShare = () => {
     // In a real app, this would use the Share API
-    Alert.alert("Share Contact", "This would open the share dialog.");
+    Alert.alert("Partager le contact", "Ceci ouvrirait la boîte de dialogue de partage.");
   };
   
   const handleCall = () => {
@@ -184,7 +184,7 @@ export default function ContactDetailScreen() {
             <View style={styles.reminderBadge}>
               <Calendar size={16} color={colors.warning} />
               <Text style={styles.reminderText}>
-                Follow up on {formatDate(contact.reminderDate)}
+                Suivi le {formatDate(contact.reminderDate)}
               </Text>
             </View>
           ) : null}
@@ -198,7 +198,7 @@ export default function ContactDetailScreen() {
                 <View style={[styles.actionIcon, styles.callIcon]}>
                   <Phone size={20} color="white" />
                 </View>
-                <Text style={styles.actionText}>Call</Text>
+                <Text style={styles.actionText}>Appeler</Text>
               </Pressable>
             ) : null}
             
@@ -221,13 +221,13 @@ export default function ContactDetailScreen() {
               <View style={[styles.actionIcon, styles.reminderIcon]}>
                 <Bell size={20} color="white" />
               </View>
-              <Text style={styles.actionText}>Remind</Text>
+              <Text style={styles.actionText}>Rappel</Text>
             </Pressable>
           </View>
         </View>
         
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Contact Information</Text>
+          <Text style={styles.sectionTitle}>Informations de contact</Text>
           
           {contact.phone ? (
             <Pressable 
@@ -236,7 +236,7 @@ export default function ContactDetailScreen() {
             >
               <Phone size={20} color={colors.primary} />
               <View style={styles.infoContent}>
-                <Text style={styles.infoLabel}>Phone</Text>
+                <Text style={styles.infoLabel}>Téléphone</Text>
                 <Text style={styles.infoValue}>{contact.phone}</Text>
               </View>
             </Pressable>
@@ -262,7 +262,7 @@ export default function ContactDetailScreen() {
             >
               <Globe size={20} color={colors.primary} />
               <View style={styles.infoContent}>
-                <Text style={styles.infoLabel}>Website</Text>
+                <Text style={styles.infoLabel}>Site web</Text>
                 <Text style={styles.infoValue}>{contact.website}</Text>
               </View>
             </Pressable>
@@ -275,7 +275,7 @@ export default function ContactDetailScreen() {
             >
               <MapPin size={20} color={colors.primary} />
               <View style={styles.infoContent}>
-                <Text style={styles.infoLabel}>Address</Text>
+                <Text style={styles.infoLabel}>Adresse</Text>
                 <Text style={styles.infoValue}>{contact.address}</Text>
               </View>
             </Pressable>
@@ -311,7 +311,7 @@ export default function ContactDetailScreen() {
             onPress={handleShare}
           >
             <Share2 size={20} color={colors.text} />
-            <Text style={styles.shareButtonText}>Share Contact</Text>
+            <Text style={styles.shareButtonText}>Partager le contact</Text>
           </Pressable>
           
           <Pressable 
@@ -319,7 +319,7 @@ export default function ContactDetailScreen() {
             onPress={handleDelete}
           >
             <Trash2 size={20} color={colors.error} />
-            <Text style={styles.deleteButtonText}>Delete Contact</Text>
+            <Text style={styles.deleteButtonText}>Supprimer le contact</Text>
           </Pressable>
         </View>
       </ScrollView>

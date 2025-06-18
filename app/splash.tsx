@@ -64,7 +64,7 @@ export default function SplashScreen() {
           <View style={styles.logoOverlay} />
         </View>
         <Text style={styles.appName}>CardScan</Text>
-        <Text style={styles.tagline}>Your business cards, digitized</Text>
+        <Text style={styles.tagline}>Vos cartes de visite, numérisées</Text>
       </Animated.View>
     </View>
   );

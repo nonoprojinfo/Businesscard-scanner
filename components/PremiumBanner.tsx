@@ -27,13 +27,13 @@ export const PremiumBanner: React.FC<PremiumBannerProps> = ({
         <View style={styles.textContainer}>
           <Text style={styles.title}>
             {remainingContacts > 0 
-              ? `${remainingContacts} free contacts remaining` 
-              : 'Free limit reached'}
+              ? `${remainingContacts} contacts gratuits restants` 
+              : 'Limite gratuite atteinte'}
           </Text>
           <Text style={styles.description}>
             {remainingContacts > 0 
-              ? 'Upgrade to Premium for unlimited contacts and more features' 
-              : 'Upgrade to Premium to add more contacts'}
+              ? 'Passez à Premium pour des contacts illimités et plus de fonctionnalités' 
+              : 'Passez à Premium pour ajouter plus de contacts'}
           </Text>
           
           <View style={styles.progressContainer}>
@@ -46,7 +46,7 @@ export const PremiumBanner: React.FC<PremiumBannerProps> = ({
       </View>
       
       <Pressable style={styles.button} onPress={onUpgrade}>
-        <Text style={styles.buttonText}>Upgrade</Text>
+        <Text style={styles.buttonText}>Passer à Premium</Text>
       </Pressable>
     </View>
   );

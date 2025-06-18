@@ -27,12 +27,12 @@ export default function PaywallScreen() {
     
     // In a real app, this would open a payment flow
     Alert.alert(
-      "Upgrade to Premium",
-      "This would open a payment flow to upgrade to Premium for $2.99/month.",
+      "Passer à Premium",
+      "Ceci ouvrirait un processus de paiement pour passer à Premium pour 2,99€/mois.",
       [
-        { text: "Cancel", style: "cancel" },
+        { text: "Annuler", style: "cancel" },
         { 
-          text: "Simulate Purchase", 
+          text: "Simuler l'achat", 
           onPress: () => {
             setPremium(true);
             completePaywall();
@@ -71,41 +71,41 @@ export default function PaywallScreen() {
           <View style={styles.crownContainer}>
             <Crown size={40} color={colors.warning} />
           </View>
-          <Text style={styles.title}>Upgrade to Premium</Text>
+          <Text style={styles.title}>Passer à Premium</Text>
           <Text style={styles.subtitle}>
-            Unlock all features and get the most out of CardScan
+            Débloquez toutes les fonctionnalités et tirez le meilleur parti de CardScan
           </Text>
         </View>
         
         <View style={styles.plansContainer}>
           <View style={styles.planCard}>
             <View style={styles.planHeader}>
-              <Text style={styles.planTitle}>Free</Text>
-              <Text style={styles.planPrice}>$0</Text>
+              <Text style={styles.planTitle}>Gratuit</Text>
+              <Text style={styles.planPrice}>0€</Text>
             </View>
             <View style={styles.planFeatures}>
-              {renderFeatureItem('Scan up to 3 business cards', false)}
-              {renderFeatureItem('Basic contact management', false)}
-              {renderFeatureItem('Manual follow-ups', false)}
+              {renderFeatureItem('Scan jusqu\'à 3 cartes de visite', false)}
+              {renderFeatureItem('Gestion de contacts basique', false)}
+              {renderFeatureItem('Relances manuelles', false)}
             </View>
           </View>
           
           <View style={[styles.planCard, styles.premiumCard]}>
             <View style={styles.premiumBadge}>
-              <Text style={styles.premiumBadgeText}>RECOMMENDED</Text>
+              <Text style={styles.premiumBadgeText}>RECOMMANDÉ</Text>
             </View>
             <View style={styles.planHeader}>
               <Text style={[styles.planTitle, styles.premiumTitle]}>Premium</Text>
-              <Text style={[styles.planPrice, styles.premiumPrice]}>$2.99</Text>
-              <Text style={styles.planPeriod}>per month</Text>
+              <Text style={[styles.planPrice, styles.premiumPrice]}>2,99€</Text>
+              <Text style={styles.planPeriod}>par mois</Text>
             </View>
             <View style={styles.planFeatures}>
-              {renderFeatureItem('Unlimited business cards', true)}
-              {renderFeatureItem('Advanced contact management', true)}
-              {renderFeatureItem('Automatic follow-up reminders', true)}
-              {renderFeatureItem('Export contacts to CSV', true)}
-              {renderFeatureItem('Enhanced OCR accuracy', true)}
-              {renderFeatureItem('Priority support', true)}
+              {renderFeatureItem('Cartes de visite illimitées', true)}
+              {renderFeatureItem('Gestion de contacts avancée', true)}
+              {renderFeatureItem('Rappels de suivi automatiques', true)}
+              {renderFeatureItem('Export des contacts en CSV', true)}
+              {renderFeatureItem('Précision OCR améliorée', true)}
+              {renderFeatureItem('Support prioritaire', true)}
             </View>
           </View>
         </View>
@@ -117,19 +117,19 @@ export default function PaywallScreen() {
           onPress={handleUpgrade}
         >
           <Crown size={20} color="white" />
-          <Text style={styles.upgradeButtonText}>Upgrade Now</Text>
+          <Text style={styles.upgradeButtonText}>Passer à Premium</Text>
         </Pressable>
         
         <Pressable 
           style={styles.skipButton} 
           onPress={handleSkip}
         >
-          <Text style={styles.skipButtonText}>Continue with Free Plan</Text>
+          <Text style={styles.skipButtonText}>Continuer avec le plan gratuit</Text>
         </Pressable>
         
         <Text style={styles.termsText}>
-          By upgrading, you agree to our Terms of Service and Privacy Policy.
-          You can cancel your subscription anytime.
+          En passant à Premium, vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité.
+          Vous pouvez annuler votre abonnement à tout moment.
         </Text>
       </View>
     </View>

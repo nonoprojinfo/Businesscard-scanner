@@ -61,9 +61,9 @@ export default function ThankYouScreen() {
         </Animated.View>
         
         <Animated.View style={{ opacity: fadeAnim }}>
-          <Text style={styles.title}>Account Created!</Text>
+          <Text style={styles.title}>Compte créé !</Text>
           <Text style={styles.message}>
-            Thank you for joining CardScan. We're excited to help you manage your professional connections.
+            Merci d'avoir rejoint CardScan. Nous sommes ravis de vous aider à gérer vos contacts professionnels.
           </Text>
         </Animated.View>
       </View>
@@ -73,7 +73,7 @@ export default function ThankYouScreen() {
           style={styles.continueButton} 
           onPress={handleContinue}
         >
-          <Text style={styles.continueButtonText}>Continue</Text>
+          <Text style={styles.continueButtonText}>Continuer</Text>
           <ArrowRight size={20} color="white" />
         </Pressable>
       </Animated.View>

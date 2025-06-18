@@ -20,22 +20,22 @@ const { width } = Dimensions.get('window');
 const onboardingData = [
   {
     id: '1',
-    title: 'Scan Business Cards',
-    description: 'Quickly capture and digitize business cards with your camera',
+    title: 'Scannez des cartes de visite',
+    description: 'Capturez et numérisez rapidement des cartes de visite avec votre appareil photo',
     icon: <ScanLine size={64} color={colors.primary} />,
     image: 'https://images.unsplash.com/photo-1607703703520-bb638e84caf2?q=80&w=1974&auto=format&fit=crop'
   },
   {
     id: '2',
-    title: 'Organize Contacts',
-    description: 'Keep all your professional connections organized in one place',
+    title: 'Organisez vos contacts',
+    description: 'Gardez tous vos contacts professionnels organisés en un seul endroit',
     icon: <Users size={64} color={colors.primary} />,
     image: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1974&auto=format&fit=crop'
   },
   {
     id: '3',
-    title: 'Set Reminders',
-    description: 'Never forget to follow up with important contacts',
+    title: 'Définissez des rappels',
+    description: "N'oubliez jamais de suivre vos contacts importants",
     icon: <Bell size={64} color={colors.primary} />,
     image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1970&auto=format&fit=crop'
   },
@@ -154,7 +154,7 @@ export default function OnboardingScreen() {
           style={styles.skipButton} 
           onPress={handleSkip}
         >
-          <Text style={styles.skipButtonText}>Skip</Text>
+          <Text style={styles.skipButtonText}>Passer</Text>
         </Pressable>
         
         <Pressable 

@@ -133,21 +133,21 @@ export const ContactForm: React.FC<ContactFormProps> = ({
         <View style={styles.form}>
           {renderFormField(
             <User size={20} color={colors.primary} />,
-            "Full Name",
+            "Nom complet",
             formData.name,
             'name'
           )}
           
           {renderFormField(
             <Building2 size={20} color={colors.primary} />,
-            "Company",
+            "Entreprise",
             formData.company,
             'company'
           )}
           
           {renderFormField(
             <Briefcase size={20} color={colors.primary} />,
-            "Position",
+            "Poste",
             formData.position,
             'position'
           )}
@@ -162,7 +162,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
           
           {renderFormField(
             <Phone size={20} color={colors.primary} />,
-            "Phone",
+            "Téléphone",
             formData.phone,
             'phone',
             'phone-pad'
@@ -170,7 +170,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
           
           {renderFormField(
             <Globe size={20} color={colors.primary} />,
-            "Website",
+            "Site web",
             formData.website,
             'website',
             'url'
@@ -178,7 +178,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
           
           {renderFormField(
             <MapPin size={20} color={colors.primary} />,
-            "Address",
+            "Adresse",
             formData.address,
             'address'
           )}
@@ -190,7 +190,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
             </View>
             <TextInput
               style={styles.notesInput}
-              placeholder="Add notes about this contact..."
+              placeholder="Ajoutez des notes sur ce contact..."
               value={formData.notes}
               onChangeText={(text) => handleChange('notes', text)}
               multiline
@@ -209,7 +209,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
             <View style={styles.tagInputContainer}>
               <TextInput
                 style={styles.tagInput}
-                placeholder="Add a tag..."
+                placeholder="Ajouter un tag..."
                 value={tagInput}
                 onChangeText={setTagInput}
                 onSubmitEditing={handleAddTag}
@@ -248,7 +248,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
           style={[styles.button, styles.cancelButton]} 
           onPress={handleCancel}
         >
-          <Text style={styles.cancelButtonText}>Cancel</Text>
+          <Text style={styles.cancelButtonText}>Annuler</Text>
         </Pressable>
         <Pressable 
           style={[
@@ -260,7 +260,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
           disabled={!formData.name || isLoading}
         >
           <Text style={styles.saveButtonText}>
-            {isLoading ? 'Saving...' : 'Save Contact'}
+            {isLoading ? 'Enregistrement...' : 'Enregistrer le contact'}
           </Text>
         </Pressable>
       </View>

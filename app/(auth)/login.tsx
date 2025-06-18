@@ -26,7 +26,7 @@ export default function LoginScreen() {
   
   const handleLogin = async () => {
     if (!email || !password) {
-      Alert.alert('Error', 'Please enter both email and password');
+      Alert.alert('Erreur', 'Veuillez saisir votre email et votre mot de passe');
       return;
     }
     
@@ -61,12 +61,12 @@ export default function LoginScreen() {
             <View style={styles.logoOverlay} />
           </View>
           <Text style={styles.appName}>CardScan</Text>
-          <Text style={styles.tagline}>Your business cards, digitized</Text>
+          <Text style={styles.tagline}>Vos cartes de visite, numérisées</Text>
         </View>
         
         <View style={styles.formContainer}>
-          <Text style={styles.title}>Welcome Back</Text>
-          <Text style={styles.subtitle}>Sign in to your account</Text>
+          <Text style={styles.title}>Bienvenue</Text>
+          <Text style={styles.subtitle}>Connectez-vous à votre compte</Text>
           
           {error && (
             <View style={styles.errorContainer}>
@@ -91,7 +91,7 @@ export default function LoginScreen() {
             <Lock size={20} color={colors.primary} />
             <TextInput
               style={styles.input}
-              placeholder="Password"
+              placeholder="Mot de passe"
               value={password}
               onChangeText={setPassword}
               secureTextEntry={!showPassword}
@@ -110,7 +110,7 @@ export default function LoginScreen() {
           </View>
           
           <Pressable style={styles.forgotPassword}>
-            <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+            <Text style={styles.forgotPasswordText}>Mot de passe oublié ?</Text>
           </Pressable>
           
           <Pressable 
@@ -124,13 +124,13 @@ export default function LoginScreen() {
             {isLoading ? (
               <ActivityIndicator color="white" size="small" />
             ) : (
-              <Text style={styles.loginButtonText}>Sign In</Text>
+              <Text style={styles.loginButtonText}>Se connecter</Text>
             )}
           </Pressable>
           
           <View style={styles.divider}>
             <View style={styles.dividerLine} />
-            <Text style={styles.dividerText}>OR</Text>
+            <Text style={styles.dividerText}>OU</Text>
             <View style={styles.dividerLine} />
           </View>
           
@@ -145,10 +145,10 @@ export default function LoginScreen() {
         </View>
         
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Don't have an account? </Text>
+          <Text style={styles.footerText}>Vous n'avez pas de compte ? </Text>
           <Link href="/(auth)/register" asChild>
             <Pressable>
-              <Text style={styles.footerLink}>Sign Up</Text>
+              <Text style={styles.footerLink}>S'inscrire</Text>
             </Pressable>
           </Link>
         </View>

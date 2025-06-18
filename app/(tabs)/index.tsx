@@ -74,7 +74,7 @@ export default function ContactsScreen() {
           <Search size={18} color={colors.textSecondary} />
           <TextInput
             style={styles.searchInput}
-            placeholder="Search contacts..."
+            placeholder="Rechercher des contacts..."
             value={searchQuery}
             onChangeText={setSearchQuery}
             onFocus={() => setIsSearching(true)}
@@ -93,7 +93,7 @@ export default function ContactsScreen() {
       
       {isSearching && searchQuery && filteredContacts.length === 0 ? (
         <View style={styles.noResults}>
-          <Text style={styles.noResultsText}>No contacts found</Text>
+          <Text style={styles.noResultsText}>Aucun contact trouvé</Text>
         </View>
       ) : null}
     </>

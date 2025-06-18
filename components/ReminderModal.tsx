@@ -25,11 +25,11 @@ export const ReminderModal: React.FC<ReminderModalProps> = ({
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   
   const reminderOptions = [
-    { id: 1, label: 'Tomorrow', days: 1 },
-    { id: 2, label: 'In 3 days', days: 3 },
-    { id: 3, label: 'In 1 week', days: 7 },
-    { id: 4, label: 'In 2 weeks', days: 14 },
-    { id: 5, label: 'In 1 month', days: 30 },
+    { id: 1, label: 'Demain', days: 1 },
+    { id: 2, label: 'Dans 3 jours', days: 3 },
+    { id: 3, label: 'Dans 1 semaine', days: 7 },
+    { id: 4, label: 'Dans 2 semaines', days: 14 },
+    { id: 5, label: 'Dans 1 mois', days: 30 },
   ];
   
   const handleSelect = (optionId: number) => {
@@ -63,7 +63,7 @@ export const ReminderModal: React.FC<ReminderModalProps> = ({
           <View style={styles.modalHeader}>
             <View style={styles.headerLeft}>
               <Calendar size={20} color={colors.primary} />
-              <Text style={styles.modalTitle}>Set Follow-up Reminder</Text>
+              <Text style={styles.modalTitle}>Définir un rappel de suivi</Text>
             </View>
             <Pressable 
               style={styles.closeButton} 
@@ -75,7 +75,7 @@ export const ReminderModal: React.FC<ReminderModalProps> = ({
           </View>
           
           <Text style={styles.modalDescription}>
-            Choose when you want to be reminded to follow up with this contact
+            Choisissez quand vous souhaitez être rappelé de suivre ce contact
           </Text>
           
           <View style={styles.optionsContainer}>
@@ -109,7 +109,7 @@ export const ReminderModal: React.FC<ReminderModalProps> = ({
               style={[styles.button, styles.cancelButton]} 
               onPress={onClose}
             >
-              <Text style={styles.cancelButtonText}>Cancel</Text>
+              <Text style={styles.cancelButtonText}>Annuler</Text>
             </Pressable>
             <Pressable 
               style={[
@@ -120,7 +120,7 @@ export const ReminderModal: React.FC<ReminderModalProps> = ({
               onPress={handleConfirm}
               disabled={!selectedOption}
             >
-              <Text style={styles.confirmButtonText}>Set Reminder</Text>
+              <Text style={styles.confirmButtonText}>Définir le rappel</Text>
             </Pressable>
           </View>
         </View>

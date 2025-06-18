@@ -41,7 +41,7 @@ export const Scanner: React.FC<ScannerProps> = ({ onScanComplete }) => {
       setCapturedImage(mockImageUri);
     } catch (error) {
       console.error('Error capturing image:', error);
-      Alert.alert('Error', 'Failed to capture image. Please try again.');
+      Alert.alert('Erreur', "Échec de la capture d'image. Veuillez réessayer.");
     }
   };
   
@@ -73,21 +73,21 @@ export const Scanner: React.FC<ScannerProps> = ({ onScanComplete }) => {
       
       // Mock OCR result
       const mockOcrResult: ContactFormData = {
-        name: 'John Smith',
+        name: 'Jean Dupont',
         company: 'Acme Corporation',
-        email: 'john.smith@acme.com',
-        phone: '+1 (555) 123-4567',
-        position: 'Sales Director',
+        email: 'jean.dupont@acme.com',
+        phone: '+33 6 12 34 56 78',
+        position: 'Directeur Commercial',
         website: 'www.acmecorp.com',
-        address: '123 Business Ave, San Francisco, CA 94107',
+        address: '123 Avenue des Affaires, 75008 Paris',
         notes: '',
-        tags: ['Sales', 'Technology'],
+        tags: ['Commercial', 'Technologie'],
       };
       
       onScanComplete(mockOcrResult, capturedImage);
     } catch (error) {
       console.error('Error processing image:', error);
-      Alert.alert('Error', 'Failed to process business card. Please try again.');
+      Alert.alert('Erreur', 'Échec du traitement de la carte de visite. Veuillez réessayer.');
     } finally {
       setIsProcessing(false);
     }
@@ -109,15 +109,15 @@ export const Scanner: React.FC<ScannerProps> = ({ onScanComplete }) => {
     return (
       <View style={styles.permissionContainer}>
         <Camera size={64} color={colors.primary} />
-        <Text style={styles.permissionTitle}>Camera Access Required</Text>
+        <Text style={styles.permissionTitle}>Accès à la caméra requis</Text>
         <Text style={styles.permissionText}>
-          We need camera access to scan business cards. Your photos will not be stored or shared without your permission.
+          Nous avons besoin d'accéder à votre caméra pour scanner les cartes de visite. Vos photos ne seront pas stockées ou partagées sans votre permission.
         </Text>
         <Pressable 
           style={styles.permissionButton} 
           onPress={requestPermission}
         >
-          <Text style={styles.permissionButtonText}>Grant Permission</Text>
+          <Text style={styles.permissionButtonText}>Autoriser l'accès</Text>
         </Pressable>
       </View>
     );
@@ -149,7 +149,7 @@ export const Scanner: React.FC<ScannerProps> = ({ onScanComplete }) => {
                   style={styles.galleryButton} 
                   onPress={handlePickImage}
                 >
-                  <Text style={styles.galleryButtonText}>Gallery</Text>
+                  <Text style={styles.galleryButtonText}>Galerie</Text>
                 </Pressable>
                 
                 <Pressable 
@@ -171,7 +171,7 @@ export const Scanner: React.FC<ScannerProps> = ({ onScanComplete }) => {
           
           <View style={styles.instructions}>
             <Text style={styles.instructionsText}>
-              Position the business card within the frame and take a photo
+              Positionnez la carte de visite dans le cadre et prenez une photo
             </Text>
           </View>
         </>
@@ -186,7 +186,7 @@ export const Scanner: React.FC<ScannerProps> = ({ onScanComplete }) => {
           {isProcessing ? (
             <View style={styles.processingOverlay}>
               <ActivityIndicator size="large" color={colors.primary} />
-              <Text style={styles.processingText}>Processing card...</Text>
+              <Text style={styles.processingText}>Traitement de la carte...</Text>
             </View>
           ) : (
             <View style={styles.previewControls}>
@@ -195,7 +195,7 @@ export const Scanner: React.FC<ScannerProps> = ({ onScanComplete }) => {
                 onPress={handleRetake}
               >
                 <X size={24} color={colors.text} />
-                <Text style={styles.retakeButtonText}>Retake</Text>
+                <Text style={styles.retakeButtonText}>Reprendre</Text>
               </Pressable>
               
               <Pressable 
@@ -203,7 +203,7 @@ export const Scanner: React.FC<ScannerProps> = ({ onScanComplete }) => {
                 onPress={handleProcess}
               >
                 <Check size={24} color="white" />
-                <Text style={styles.useButtonText}>Use Photo</Text>
+                <Text style={styles.useButtonText}>Utiliser</Text>
               </Pressable>
             </View>
           )}
