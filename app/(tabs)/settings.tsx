@@ -18,7 +18,9 @@ import {
   HelpCircle, 
   Mail, 
   LogOut, 
-  ChevronRight 
+  ChevronRight,
+  User,
+  Shield
 } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
 import { colors } from '@/constants/colors';
@@ -37,7 +39,6 @@ export default function SettingsScreen() {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     }
     
-    // In a real app, this would open a payment flow
     Alert.alert(
       "Passer à Premium",
       "Ceci ouvrirait un processus de paiement pour passer à Premium pour 2,99€/mois.",
@@ -93,7 +94,8 @@ export default function SettingsScreen() {
     title: string,
     subtitle: string,
     onPress: () => void,
-    isPremiumFeature = false
+    isPremiumFeature = false,
+    showChevron = true
   ) => (
     <Pressable 
       style={({ pressed }) => [
@@ -117,9 +119,9 @@ export default function SettingsScreen() {
           <Crown size={12} color="white" />
           <Text style={styles.premiumBadgeText}>PRO</Text>
         </View>
-      ) : (
+      ) : showChevron ? (
         <ChevronRight size={20} color={colors.textSecondary} />
-      )}
+      ) : null}
     </Pressable>
   );
   
@@ -130,36 +132,65 @@ export default function SettingsScreen() {
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.header}>
-        <View style={styles.profileImageContainer}>
-          <Image
-            source={{ uri: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80' }}
-            style={styles.profileImage}
-            contentFit="cover"
-          />
+        <View style={styles.profileSection}>
+          <View style={styles.profileImageContainer}>
+            <Image
+              source={{ uri: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80' }}
+              style={styles.profileImage}
+              contentFit="cover"
+            />
+            <View style={styles.statusIndicator} />
+          </View>
+          
+          <View style={styles.profileInfo}>
+            <Text style={styles.profileName}>{user?.name || 'Utilisateur'}</Text>
+            <Text style={styles.profileEmail}>{user?.email || 'utilisateur@exemple.com'}</Text>
+            
+            {isPremium ? (
+              <View style={styles.premiumContainer}>
+                <Crown size={16} color={colors.warning} />
+                <Text style={styles.premiumText}>Membre Premium</Text>
+              </View>
+            ) : (
+              <View style={styles.freeContainer}>
+                <Text style={styles.freeText}>
+                  {contactsCount}/{maxFreeContacts} contacts gratuits
+                </Text>
+              </View>
+            )}
+          </View>
         </View>
-        <Text style={styles.profileName}>{user?.name || 'Utilisateur'}</Text>
-        <Text style={styles.profileEmail}>{user?.email || 'utilisateur@exemple.com'}</Text>
         
         {!isPremium && (
-          <View style={styles.statsContainer}>
-            <Text style={styles.statsText}>
-              {contactsCount}/{maxFreeContacts} contacts gratuits utilisés
-            </Text>
-            <Pressable 
-              style={styles.upgradeButton}
-              onPress={handleUpgrade}
-            >
-              <Crown size={16} color="white" />
-              <Text style={styles.upgradeButtonText}>Passer à Premium</Text>
-            </Pressable>
-          </View>
+          <Pressable 
+            style={styles.upgradeCard}
+            onPress={handleUpgrade}
+          >
+            <View style={styles.upgradeContent}>
+              <Crown size={24} color={colors.warning} />
+              <View style={styles.upgradeText}>
+                <Text style={styles.upgradeTitle}>Passer à Premium</Text>
+                <Text style={styles.upgradeSubtitle}>Contacts illimités et plus</Text>
+              </View>
+            </View>
+            <ChevronRight size={20} color={colors.warning} />
+          </Pressable>
         )}
-        
-        {isPremium && (
-          <View style={styles.premiumContainer}>
-            <Crown size={20} color={colors.warning} />
-            <Text style={styles.premiumText}>Membre Premium</Text>
-          </View>
+      </View>
+      
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Compte</Text>
+        {renderMenuItem(
+          <User size={22} color={colors.primary} />,
+          "Profil",
+          "Gérer vos informations personnelles",
+          () => Alert.alert("Profil", "Ceci ouvrirait la page de profil.")
+        )}
+        {renderMenuItem(
+          <Shield size={22} color={colors.primary} />,
+          "Confidentialité",
+          "Paramètres de confidentialité et sécurité",
+          () => Alert.alert("Confidentialité", "Ceci ouvrirait les paramètres de confidentialité.")
         )}
       </View>
       
@@ -211,7 +242,7 @@ export default function SettingsScreen() {
         {renderMenuItem(
           <Mail size={22} color={colors.primary} />,
           "Contactez-nous",
-          "Envoyez-nous vos commentaires ou signalez des problèmes",
+          "Envoyez-nous vos commentaires",
           () => router.push('/settings/contact-us')
         )}
       </View>
@@ -238,78 +269,110 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   header: {
-    alignItems: 'center',
-    paddingVertical: 24,
-    paddingHorizontal: 16,
+    padding: 20,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
   },
+  profileSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
   profileImageContainer: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    overflow: 'hidden',
-    marginBottom: 16,
-    backgroundColor: colors.placeholder,
+    position: 'relative',
+    marginRight: 16,
   },
   profileImage: {
-    width: '100%',
-    height: '100%',
+    width: 72,
+    height: 72,
+    borderRadius: 20,
+    backgroundColor: colors.placeholder,
+  },
+  statusIndicator: {
+    position: 'absolute',
+    bottom: 2,
+    right: 2,
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    backgroundColor: colors.success,
+    borderWidth: 2,
+    borderColor: colors.background,
+  },
+  profileInfo: {
+    flex: 1,
   },
   profileName: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 22,
+    fontWeight: '800',
     color: colors.text,
     marginBottom: 4,
   },
   profileEmail: {
-    fontSize: 14,
+    fontSize: 15,
     color: colors.textSecondary,
-    marginBottom: 16,
-  },
-  statsContainer: {
-    alignItems: 'center',
-    gap: 12,
-  },
-  statsText: {
-    fontSize: 14,
-    color: colors.textSecondary,
-  },
-  upgradeButton: {
-    flexDirection: 'row',
-    backgroundColor: colors.primary,
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    alignItems: 'center',
-    gap: 8,
-  },
-  upgradeButtonText: {
-    color: 'white',
-    fontSize: 14,
+    marginBottom: 8,
     fontWeight: '500',
   },
   premiumContainer: {
     flexDirection: 'row',
-    backgroundColor: colors.warning + '15', // 15% opacity
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 16,
+    backgroundColor: colors.warning + '15',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 12,
     alignItems: 'center',
-    gap: 8,
+    gap: 6,
+    alignSelf: 'flex-start',
   },
   premiumText: {
     color: colors.warning,
-    fontSize: 14,
+    fontSize: 13,
+    fontWeight: '700',
+  },
+  freeContainer: {
+    alignSelf: 'flex-start',
+  },
+  freeText: {
+    fontSize: 13,
+    color: colors.textSecondary,
     fontWeight: '600',
+  },
+  upgradeCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: colors.warning + '08',
+    borderRadius: 16,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: colors.warning + '20',
+  },
+  upgradeContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  upgradeText: {
+    flex: 1,
+  },
+  upgradeTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: colors.text,
+    marginBottom: 2,
+  },
+  upgradeSubtitle: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    fontWeight: '500',
   },
   section: {
-    paddingTop: 24,
-    paddingHorizontal: 16,
+    paddingTop: 32,
+    paddingHorizontal: 20,
   },
   sectionTitle: {
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 18,
+    fontWeight: '800',
     color: colors.text,
     marginBottom: 16,
   },
@@ -317,11 +380,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 20,
     backgroundColor: colors.card,
-    borderRadius: 12,
+    borderRadius: 16,
     marginBottom: 12,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   menuItemPressed: {
     opacity: 0.8,
@@ -333,61 +398,65 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   menuItemIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: colors.primary + '10', // 10% opacity
+    width: 44,
+    height: 44,
+    borderRadius: 12,
+    backgroundColor: colors.primary + '10',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 12,
+    marginRight: 16,
   },
   menuItemText: {
     flex: 1,
   },
   menuItemTitle: {
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: '600',
     color: colors.text,
     marginBottom: 2,
   },
   menuItemSubtitle: {
     fontSize: 14,
     color: colors.textSecondary,
+    fontWeight: '500',
   },
   premiumBadge: {
     flexDirection: 'row',
     backgroundColor: colors.warning,
     paddingVertical: 4,
     paddingHorizontal: 8,
-    borderRadius: 12,
+    borderRadius: 8,
     alignItems: 'center',
     gap: 4,
   },
   premiumBadgeText: {
     color: 'white',
-    fontSize: 12,
-    fontWeight: '600',
+    fontSize: 11,
+    fontWeight: '800',
   },
   logoutButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 32,
-    marginHorizontal: 16,
-    paddingVertical: 12,
-    borderRadius: 8,
-    backgroundColor: colors.error + '10', // 10% opacity
+    marginHorizontal: 20,
+    paddingVertical: 16,
+    borderRadius: 16,
+    backgroundColor: colors.error + '08',
+    borderWidth: 1,
+    borderColor: colors.error + '20',
     gap: 8,
   },
   logoutText: {
     color: colors.error,
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: '600',
   },
   versionText: {
     textAlign: 'center',
-    marginTop: 16,
-    fontSize: 12,
+    marginTop: 24,
+    fontSize: 13,
     color: colors.textSecondary,
+    fontWeight: '500',
   },
 });

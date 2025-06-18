@@ -9,7 +9,7 @@ import {
   Alert
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Crown, Check, X } from 'lucide-react-native';
+import { Crown, Check, X, Sparkles } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
 import { colors } from '@/constants/colors';
 import { useAuthStore } from '@/store/authStore';
@@ -25,7 +25,6 @@ export default function PaywallScreen() {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     }
     
-    // In a real app, this would open a payment flow
     Alert.alert(
       "Passer à Premium",
       "Ceci ouvrirait un processus de paiement pour passer à Premium pour 2,99€/mois.",
@@ -70,10 +69,13 @@ export default function PaywallScreen() {
         <View style={styles.header}>
           <View style={styles.crownContainer}>
             <Crown size={40} color={colors.warning} />
+            <View style={styles.sparkleContainer}>
+              <Sparkles size={16} color={colors.accent} />
+            </View>
           </View>
-          <Text style={styles.title}>Passer à Premium</Text>
+          <Text style={styles.title}>Débloquez tout le potentiel</Text>
           <Text style={styles.subtitle}>
-            Débloquez toutes les fonctionnalités et tirez le meilleur parti de CardScan
+            Passez à Premium et transformez votre façon de gérer vos contacts professionnels
           </Text>
         </View>
         
@@ -84,9 +86,9 @@ export default function PaywallScreen() {
               <Text style={styles.planPrice}>0€</Text>
             </View>
             <View style={styles.planFeatures}>
-              {renderFeatureItem('Scan jusqu\'à 3 cartes de visite', false)}
+              {renderFeatureItem('Jusqu\'à 3 cartes de visite', false)}
               {renderFeatureItem('Gestion de contacts basique', false)}
-              {renderFeatureItem('Relances manuelles', false)}
+              {renderFeatureItem('Rappels manuels', false)}
             </View>
           </View>
           
@@ -96,8 +98,10 @@ export default function PaywallScreen() {
             </View>
             <View style={styles.planHeader}>
               <Text style={[styles.planTitle, styles.premiumTitle]}>Premium</Text>
-              <Text style={[styles.planPrice, styles.premiumPrice]}>2,99€</Text>
-              <Text style={styles.planPeriod}>par mois</Text>
+              <View style={styles.priceContainer}>
+                <Text style={[styles.planPrice, styles.premiumPrice]}>2,99€</Text>
+                <Text style={styles.planPeriod}>par mois</Text>
+              </View>
             </View>
             <View style={styles.planFeatures}>
               {renderFeatureItem('Cartes de visite illimitées', true)}
@@ -113,7 +117,10 @@ export default function PaywallScreen() {
       
       <View style={styles.buttonsContainer}>
         <Pressable 
-          style={styles.upgradeButton} 
+          style={({ pressed }) => [
+            styles.upgradeButton,
+            pressed && styles.upgradeButtonPressed
+          ]} 
           onPress={handleUpgrade}
         >
           <Crown size={20} color="white" />
@@ -147,21 +154,38 @@ const styles = StyleSheet.create({
   header: {
     alignItems: 'center',
     paddingTop: 60,
-    paddingBottom: 32,
-    paddingHorizontal: 24,
+    paddingBottom: 40,
+    paddingHorizontal: 32,
   },
   crownContainer: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: colors.warning + '20', // 20% opacity
+    position: 'relative',
+    width: 96,
+    height: 96,
+    borderRadius: 24,
+    backgroundColor: colors.warning + '15',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 24,
+    shadowColor: colors.shadow,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  sparkleContainer: {
+    position: 'absolute',
+    top: -8,
+    right: -8,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: colors.accent + '20',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
+    fontWeight: '800',
     color: colors.text,
     marginBottom: 12,
     textAlign: 'center',
@@ -172,14 +196,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     maxWidth: 300,
     lineHeight: 24,
+    fontWeight: '500',
   },
   plansContainer: {
     paddingHorizontal: 24,
-    gap: 24,
+    gap: 20,
   },
   planCard: {
     backgroundColor: colors.card,
-    borderRadius: 16,
+    borderRadius: 20,
     padding: 24,
     borderWidth: 1,
     borderColor: colors.border,
@@ -188,20 +213,25 @@ const styles = StyleSheet.create({
     borderColor: colors.warning,
     borderWidth: 2,
     position: 'relative',
+    shadowColor: colors.shadow,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 4,
   },
   premiumBadge: {
     position: 'absolute',
     top: -12,
     alignSelf: 'center',
     backgroundColor: colors.warning,
-    paddingVertical: 4,
-    paddingHorizontal: 12,
+    paddingVertical: 6,
+    paddingHorizontal: 16,
     borderRadius: 12,
   },
   premiumBadgeText: {
     color: 'white',
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: '800',
   },
   planHeader: {
     alignItems: 'center',
@@ -209,16 +239,19 @@ const styles = StyleSheet.create({
   },
   planTitle: {
     fontSize: 20,
-    fontWeight: '600',
+    fontWeight: '700',
     color: colors.text,
     marginBottom: 8,
   },
   premiumTitle: {
     color: colors.warning,
   },
+  priceContainer: {
+    alignItems: 'center',
+  },
   planPrice: {
     fontSize: 32,
-    fontWeight: 'bold',
+    fontWeight: '800',
     color: colors.text,
   },
   premiumPrice: {
@@ -228,6 +261,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.textSecondary,
     marginTop: 4,
+    fontWeight: '600',
   },
   planFeatures: {
     gap: 16,
@@ -240,6 +274,7 @@ const styles = StyleSheet.create({
   featureText: {
     fontSize: 16,
     color: colors.text,
+    fontWeight: '500',
   },
   featureTextFree: {
     color: colors.textSecondary,
@@ -254,20 +289,28 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: colors.primary,
     paddingVertical: 16,
-    borderRadius: 12,
+    borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 16,
     gap: 8,
+    shadowColor: colors.shadow,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  upgradeButtonPressed: {
+    transform: [{ scale: 0.96 }],
   },
   upgradeButtonText: {
     color: 'white',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '700',
   },
   skipButton: {
     paddingVertical: 16,
-    borderRadius: 12,
+    borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 16,
@@ -275,12 +318,13 @@ const styles = StyleSheet.create({
   skipButtonText: {
     color: colors.textSecondary,
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: '600',
   },
   termsText: {
     fontSize: 12,
     color: colors.textSecondary,
     textAlign: 'center',
     lineHeight: 18,
+    fontWeight: '500',
   },
 });

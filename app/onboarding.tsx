@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
-import { ScanLine, Users, Bell, ArrowRight, Check } from 'lucide-react-native';
+import { ScanLine, Users, Bell, ArrowRight, Check, Sparkles } from 'lucide-react-native';
 import { colors } from '@/constants/colors';
 import { useAuthStore } from '@/store/authStore';
 
@@ -20,24 +20,27 @@ const { width } = Dimensions.get('window');
 const onboardingData = [
   {
     id: '1',
-    title: 'Scannez des cartes de visite',
-    description: 'Capturez et numérisez rapidement des cartes de visite avec votre appareil photo',
-    icon: <ScanLine size={64} color={colors.primary} />,
-    image: 'https://images.unsplash.com/photo-1607703703520-bb638e84caf2?q=80&w=1974&auto=format&fit=crop'
+    title: 'Scannez en un instant',
+    description: 'Transformez n\'importe quelle carte de visite en contact numérique en quelques secondes',
+    icon: <ScanLine size={56} color={colors.primary} />,
+    image: 'https://images.unsplash.com/photo-1607703703520-bb638e84caf2?q=80&w=1974&auto=format&fit=crop',
+    accent: colors.primary
   },
   {
     id: '2',
-    title: 'Organisez vos contacts',
-    description: 'Gardez tous vos contacts professionnels organisés en un seul endroit',
-    icon: <Users size={64} color={colors.primary} />,
-    image: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1974&auto=format&fit=crop'
+    title: 'Organisez intelligemment',
+    description: 'Gardez tous vos contacts professionnels organisés et facilement accessibles',
+    icon: <Users size={56} color={colors.accent} />,
+    image: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1974&auto=format&fit=crop',
+    accent: colors.accent
   },
   {
     id: '3',
-    title: 'Définissez des rappels',
-    description: "N'oubliez jamais de suivre vos contacts importants",
-    icon: <Bell size={64} color={colors.primary} />,
-    image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1970&auto=format&fit=crop'
+    title: 'Ne ratez aucun suivi',
+    description: 'Définissez des rappels intelligents pour maintenir vos relations professionnelles',
+    icon: <Bell size={56} color={colors.warning} />,
+    image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1970&auto=format&fit=crop',
+    accent: colors.warning
   },
 ];
 
@@ -69,7 +72,7 @@ export default function OnboardingScreen() {
     router.replace('/splash');
   };
   
-  const renderItem = ({ item }: { item: typeof onboardingData[0] }) => (
+  const renderItem = ({ item, index }: { item: typeof onboardingData[0], index: number }) => (
     <View style={[styles.slide, { width: windowWidth }]}>
       <View style={styles.imageContainer}>
         <Image
@@ -77,11 +80,18 @@ export default function OnboardingScreen() {
           style={styles.image}
           contentFit="cover"
         />
-        <View style={styles.imageOverlay} />
+        <View style={[styles.imageOverlay, { backgroundColor: item.accent + '20' }]} />
+        
         <View style={styles.iconContainer}>
-          {item.icon}
+          <View style={[styles.iconBackground, { backgroundColor: item.accent + '15' }]}>
+            {item.icon}
+          </View>
+          <View style={styles.sparkleContainer}>
+            <Sparkles size={16} color={item.accent} />
+          </View>
         </View>
       </View>
+      
       <View style={styles.textContainer}>
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.description}>{item.description}</Text>
@@ -101,7 +111,7 @@ export default function OnboardingScreen() {
           
           const dotWidth = scrollX.interpolate({
             inputRange,
-            outputRange: [8, 16, 8],
+            outputRange: [8, 24, 8],
             extrapolate: 'clamp',
           });
           
@@ -158,7 +168,10 @@ export default function OnboardingScreen() {
         </Pressable>
         
         <Pressable 
-          style={styles.nextButton} 
+          style={({ pressed }) => [
+            styles.nextButton,
+            pressed && styles.nextButtonPressed
+          ]} 
           onPress={handleNext}
         >
           {currentIndex < onboardingData.length - 1 ? (
@@ -184,7 +197,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: '100%',
-    height: '50%',
+    height: '55%',
     position: 'relative',
   },
   image: {
@@ -193,50 +206,69 @@ const styles = StyleSheet.create({
   },
   imageOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: colors.primary,
-    opacity: 0.2,
+    opacity: 0.3,
   },
   iconContainer: {
     position: 'absolute',
-    bottom: -32,
+    bottom: -40,
     alignSelf: 'center',
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    position: 'relative',
+  },
+  iconBackground: {
+    width: 96,
+    height: 96,
+    borderRadius: 24,
     backgroundColor: colors.background,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: colors.text,
-    shadowOffset: { width: 0, height: 2 },
+    shadowColor: colors.shadow,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.15,
+    shadowRadius: 16,
+    elevation: 8,
+  },
+  sparkleContainer: {
+    position: 'absolute',
+    top: -8,
+    right: -8,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: colors.background,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: colors.shadow,
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
+    shadowRadius: 8,
     elevation: 4,
   },
   textContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 32,
-    marginTop: 48,
+    paddingHorizontal: 40,
+    marginTop: 60,
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 28,
+    fontWeight: '800',
     color: colors.text,
     marginBottom: 16,
     textAlign: 'center',
   },
   description: {
-    fontSize: 16,
+    fontSize: 17,
     color: colors.textSecondary,
     textAlign: 'center',
-    lineHeight: 24,
+    lineHeight: 26,
+    fontWeight: '500',
   },
   pagination: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 24,
+    marginBottom: 40,
   },
   dot: {
     height: 8,
@@ -248,28 +280,31 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 24,
-    paddingBottom: 48,
+    paddingHorizontal: 32,
+    paddingBottom: 60,
   },
   skipButton: {
-    padding: 12,
+    padding: 16,
   },
   skipButtonText: {
     fontSize: 16,
     color: colors.textSecondary,
-    fontWeight: '500',
+    fontWeight: '600',
   },
   nextButton: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    width: 64,
+    height: 64,
+    borderRadius: 32,
     backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: colors.text,
-    shadowOffset: { width: 0, height: 2 },
+    shadowColor: colors.shadow,
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 5,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  nextButtonPressed: {
+    transform: [{ scale: 0.95 }],
   },
 });
