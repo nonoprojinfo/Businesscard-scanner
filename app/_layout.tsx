@@ -2,7 +2,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 import { Stack, useRouter, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { colors } from "@/constants/colors";
 import { useAuthStore } from "@/store/authStore";
@@ -42,6 +42,7 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const router = useRouter();
   const segments = useSegments();
+  const [isMounted, setIsMounted] = useState(false);
   const { 
     isAuthenticated, 
     isOnboardingComplete, 
@@ -51,12 +52,17 @@ function RootLayoutNav() {
     hasSeenPaywall
   } = useAuthStore();
 
+  // Check authentication status when app loads
   useEffect(() => {
-    // Check authentication status when app loads
     checkAuth();
+    // Set mounted state after initial render
+    setIsMounted(true);
   }, []);
 
   useEffect(() => {
+    // Only run navigation logic after component is mounted
+    if (!isMounted) return;
+
     const inAuthGroup = segments[0] === "(auth)";
     const inOnboardingGroup = segments[0] === "onboarding";
     const inSplashScreen = segments[0] === "splash";
@@ -98,7 +104,7 @@ function RootLayoutNav() {
       router.replace("/(tabs)");
       return;
     }
-  }, [isAuthenticated, segments, isOnboardingComplete, hasSeenOnboarding, hasSeenThankYou, hasSeenPaywall]);
+  }, [isAuthenticated, segments, isOnboardingComplete, hasSeenOnboarding, hasSeenThankYou, hasSeenPaywall, isMounted]);
 
   return (
     <>
