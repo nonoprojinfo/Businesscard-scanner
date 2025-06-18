@@ -7,7 +7,7 @@ import { useAuthStore } from '@/store/authStore';
 
 export default function SplashScreen() {
   const router = useRouter();
-  const { isAuthenticated, isOnboardingComplete } = useAuthStore();
+  const { isAuthenticated } = useAuthStore();
   const fadeAnim = new Animated.Value(0);
   const scaleAnim = new Animated.Value(0.9);
   
@@ -31,18 +31,14 @@ export default function SplashScreen() {
     // Navigate after a delay
     const timer = setTimeout(() => {
       if (isAuthenticated) {
-        if (isOnboardingComplete) {
-          router.replace('/(tabs)');
-        } else {
-          router.replace('/onboarding');
-        }
+        router.replace('/(tabs)');
       } else {
         router.replace('/(auth)/login');
       }
     }, 2000);
     
     return () => clearTimeout(timer);
-  }, [isAuthenticated, isOnboardingComplete]);
+  }, [isAuthenticated]);
   
   return (
     <View style={styles.container}>

@@ -8,7 +8,7 @@ import { colors } from "@/constants/colors";
 import { useAuthStore } from "@/store/authStore";
 
 export const unstable_settings = {
-  initialRouteName: "splash",
+  initialRouteName: "onboarding",
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -42,7 +42,7 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const router = useRouter();
   const segments = useSegments();
-  const { isAuthenticated, isOnboardingComplete, checkAuth } = useAuthStore();
+  const { isAuthenticated, isOnboardingComplete, checkAuth, hasSeenOnboarding } = useAuthStore();
 
   useEffect(() => {
     // Check authentication status when app loads
@@ -52,30 +52,32 @@ function RootLayoutNav() {
   useEffect(() => {
     const inAuthGroup = segments[0] === "(auth)";
     const inOnboardingGroup = segments[0] === "onboarding";
+    const inSplashScreen = segments[0] === "splash";
 
-    if (
-      // If the user is not signed in and the initial segment is not in the auth group,
-      // redirect to the sign-in screen.
-      !isAuthenticated &&
-      !inAuthGroup &&
-      !inOnboardingGroup &&
-      segments[0] !== "splash"
-    ) {
-      router.replace("/(auth)/login");
-    } else if (
-      // If the user is signed in and the initial segment is in the auth group,
-      // redirect away.
-      isAuthenticated &&
-      (inAuthGroup || segments[0] === "splash")
-    ) {
-      // If onboarding is not complete, redirect to onboarding
-      if (!isOnboardingComplete) {
-        router.replace("/onboarding");
-      } else {
-        router.replace("/(tabs)");
-      }
+    // First-time user flow: onboarding -> splash -> auth -> app
+    if (!hasSeenOnboarding && !inOnboardingGroup) {
+      router.replace("/onboarding");
+      return;
     }
-  }, [isAuthenticated, segments, isOnboardingComplete]);
+
+    // After onboarding, go to splash screen
+    if (hasSeenOnboarding && !isAuthenticated && !inSplashScreen && !inAuthGroup) {
+      router.replace("/splash");
+      return;
+    }
+
+    // After splash, if not authenticated, go to auth
+    if (!isAuthenticated && !inAuthGroup && !inSplashScreen && hasSeenOnboarding) {
+      router.replace("/(auth)/login");
+      return;
+    }
+
+    // If authenticated but in auth group, go to app
+    if (isAuthenticated && (inAuthGroup || inSplashScreen)) {
+      router.replace("/(tabs)");
+      return;
+    }
+  }, [isAuthenticated, segments, isOnboardingComplete, hasSeenOnboarding]);
 
   return (
     <>
@@ -93,8 +95,8 @@ function RootLayoutNav() {
           },
         }}
       >
-        <Stack.Screen name="splash" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
+        <Stack.Screen name="splash" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen 

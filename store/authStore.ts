@@ -12,6 +12,7 @@ interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
   isOnboardingComplete: boolean;
+  hasSeenOnboarding: boolean;
   isLoading: boolean;
   error: string | null;
   
@@ -28,6 +29,7 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       isAuthenticated: false,
       isOnboardingComplete: false,
+      hasSeenOnboarding: false,
       isLoading: false,
       error: null,
       
@@ -97,7 +99,10 @@ export const useAuthStore = create<AuthState>()(
       },
       
       completeOnboarding: () => {
-        set({ isOnboardingComplete: true });
+        set({ 
+          isOnboardingComplete: true,
+          hasSeenOnboarding: true 
+        });
       },
       
       checkAuth: () => {

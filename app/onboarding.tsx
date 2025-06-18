@@ -66,7 +66,7 @@ export default function OnboardingScreen() {
   
   const handleComplete = () => {
     completeOnboarding();
-    router.replace('/(tabs)');
+    router.replace('/splash');
   };
   
   const renderItem = ({ item }: { item: typeof onboardingData[0] }) => (
