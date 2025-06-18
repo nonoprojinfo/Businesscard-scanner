@@ -111,7 +111,7 @@ function RootLayoutNav() {
       <StatusBar style="dark" />
       <Stack
         screenOptions={{
-          headerBackTitle: "Back",
+          headerBackTitle: "Retour",
           headerStyle: {
             backgroundColor: colors.background,
           },
@@ -138,14 +138,50 @@ function RootLayoutNav() {
         <Stack.Screen 
           name="contact/[id]" 
           options={{ 
-            title: "Contact Details",
+            title: "Détails du contact",
           }} 
         />
         <Stack.Screen 
           name="contact/edit" 
           options={{ 
-            title: "Edit Contact",
+            title: "Modifier le contact",
             presentation: 'modal',
+          }} 
+        />
+        <Stack.Screen 
+          name="settings/subscription" 
+          options={{ 
+            title: "Abonnement",
+          }} 
+        />
+        <Stack.Screen 
+          name="settings/manage-subscription" 
+          options={{ 
+            title: "Gérer l'abonnement",
+          }} 
+        />
+        <Stack.Screen 
+          name="settings/export" 
+          options={{ 
+            title: "Exporter les contacts",
+          }} 
+        />
+        <Stack.Screen 
+          name="settings/notifications" 
+          options={{ 
+            title: "Notifications",
+          }} 
+        />
+        <Stack.Screen 
+          name="settings/help" 
+          options={{ 
+            title: "Aide & Support",
+          }} 
+        />
+        <Stack.Screen 
+          name="settings/contact-us" 
+          options={{ 
+            title: "Contactez-nous",
           }} 
         />
       </Stack>
