@@ -13,6 +13,8 @@ interface AuthState {
   isAuthenticated: boolean;
   isOnboardingComplete: boolean;
   hasSeenOnboarding: boolean;
+  hasSeenThankYou: boolean;
+  hasSeenPaywall: boolean;
   isLoading: boolean;
   error: string | null;
   
@@ -20,6 +22,8 @@ interface AuthState {
   register: (name: string, email: string, password: string) => Promise<void>;
   logout: () => void;
   completeOnboarding: () => void;
+  completeThankYou: () => void;
+  completePaywall: () => void;
   checkAuth: () => void;
 }
 
@@ -30,6 +34,8 @@ export const useAuthStore = create<AuthState>()(
       isAuthenticated: false,
       isOnboardingComplete: false,
       hasSeenOnboarding: false,
+      hasSeenThankYou: false,
+      hasSeenPaywall: false,
       isLoading: false,
       error: null,
       
@@ -103,6 +109,14 @@ export const useAuthStore = create<AuthState>()(
           isOnboardingComplete: true,
           hasSeenOnboarding: true 
         });
+      },
+      
+      completeThankYou: () => {
+        set({ hasSeenThankYou: true });
+      },
+      
+      completePaywall: () => {
+        set({ hasSeenPaywall: true });
       },
       
       checkAuth: () => {

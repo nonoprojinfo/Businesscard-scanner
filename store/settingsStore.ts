@@ -17,7 +17,7 @@ export const useSettingsStore = create<SettingsState>()(
     (set, get) => ({
       isPremium: false,
       contactsCount: 0,
-      maxFreeContacts: 10,
+      maxFreeContacts: 3, // Changed from 10 to 3 as requested
       
       setPremium: (value) => {
         set({ isPremium: value });
